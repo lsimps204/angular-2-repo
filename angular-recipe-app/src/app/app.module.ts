@@ -12,6 +12,7 @@ import { ShoppingEditComponent } from './shopping-list/shopping-edit/shopping-ed
 import { HighlightDirective } from './shared/highlight.directive';
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { ShoppingListService } from './shopping-list/shopping-list.service';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     BrowserModule,
     NgbModule.forRoot()
   ],
-  providers: [],
+  providers: [ShoppingListService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
