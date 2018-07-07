@@ -24,6 +24,10 @@ export class RecipeService {
 
     constructor(private slService: ShoppingListService) {}
 
+    getRecipe(index: number): Recipe {
+        return this.recipes[index]
+    }
+
     getRecipes(): Recipe[] {
         return this.recipes.slice() // Returns a new array (a copy) of the local recipes array, NOT a reference.
     }

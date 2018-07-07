@@ -7,19 +7,19 @@
 
     <div class="collapse navbar-collapse" id="navbarToggler">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-            <li class="nav-item active">
-                <a class="nav-link" href="#" (click)="onSelect('recipe')">Recipes</a>
+            <li class="nav-item" routerLinkActive="active">
+                <a class="nav-link" routerLink="/recipes">Recipes</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#" (click)="onSelect('shopping')">Shopping List</a>
+            <li class="nav-item" routerLinkActive="active">
+                <a class="nav-link" routerLink="/shopping-list">Shopping List</a>
             </li>
         </ul>
 
         <div ngbDropdown>
-            <button href="#" class="btn btn-secondary dropdown-toggle" ngbDropdownToggle>Manage</button>
+            <button class="btn btn-secondary dropdown-toggle" ngbDropdownToggle>Manage</button>
             <div ngbDropdownMenu>
-                <a class="dropdown-item" href="#">Save Data</a>
-                <a class="dropdown-item" href="#">Fetch Data</a>
+                <a class="dropdown-item">Save Data</a>
+                <a class="dropdown-item">Fetch Data</a>
             </div>
         </div>
     </div>
