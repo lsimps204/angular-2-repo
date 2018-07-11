@@ -1,0 +1,20 @@
+[
+    {
+        "model": "recipes_api.Recipe",
+        "pk": 1,
+        "fields": {
+            "name": "Rigatoni Con Pollo e Zucchine",
+            "description": "Pasta and chicken",
+            "imagePath": "https://media-cdn.tripadvisor.com/media/photo-s/09/f4/15/54/rigatoni-con-pollo.jpg"
+        }
+    },
+    {
+        "model": "recipes_api.Recipe",
+        "pk": 2,
+        "fields": {
+            "name": "Salad",
+            "description": "Healthy Salad",
+            "imagePath": "http://images.media-allrecipes.com/userphotos/960x960/4552561.jpg"
+        }
+    }
+]

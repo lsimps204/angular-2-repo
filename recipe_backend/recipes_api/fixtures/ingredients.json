@@ -1,0 +1,58 @@
+[
+    {
+        "model": "recipes_api.Ingredient",
+        "pk": 1,
+        "fields": {
+            "name": "Tomato"
+        }
+    },
+    {
+        "model": "recipes_api.Ingredient",
+        "pk": 2,
+        "fields": {
+            "name": "Carrot"
+        }
+    },
+    {
+        "model": "recipes_api.Ingredient",
+        "pk": 3,
+        "fields": {
+            "name": "Apple"
+        }
+    },
+    {
+        "model": "recipes_api.Ingredient",
+        "pk": 4,
+        "fields": {
+            "name": "Orange"
+        }
+    },
+    {
+        "model": "recipes_api.Ingredient",
+        "pk": 5,
+        "fields": {
+            "name": "Banana"
+        }
+    },
+    {
+        "model": "recipes_api.Ingredient",
+        "pk": 6,
+        "fields": {
+            "name": "Pasta"
+        }
+    },
+    {
+        "model": "recipes_api.Ingredient",
+        "pk": 7,
+        "fields": {
+            "name": "Chicken"
+        }
+    },
+    {
+        "model": "recipes_api.Ingredient",
+        "pk": 8,
+        "fields": {
+            "name": "Pepper"
+        }
+    }
+]

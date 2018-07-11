@@ -1,0 +1,38 @@
+[
+    {
+        "model": "recipes_api.RecipeIngredient",
+        "pk": 1,
+        "fields": {
+            "ingredient": 6,
+            "recipe": 1,
+            "amount": 3
+        }
+    },
+    {
+        "model": "recipes_api.RecipeIngredient",
+        "pk": 2,
+        "fields": {
+            "ingredient": 7,
+            "recipe": 1,
+            "amount": 15
+        }
+    },
+    {
+        "model": "recipes_api.RecipeIngredient",
+        "pk": 3,
+        "fields": {
+            "ingredient": 1,
+            "recipe": 2,
+            "amount": 6
+        }
+    },
+    {
+        "model": "recipes_api.RecipeIngredient",
+        "pk": 4,
+        "fields": {
+            "ingredient": 8,
+            "recipe": 2,
+            "amount": 2
+        }
+    }
+]
