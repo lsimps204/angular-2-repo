@@ -2,14 +2,14 @@ from rest_framework import serializers
 
 from .models import Recipe, Ingredient
 
-class IngredientSerializer(serializers.Serializer):
+class IngredientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ingredient
         fields = ['id', 'name']
 
 class RecipeSerializer(serializers.ModelSerializer):
-    # TO DO: fix this to show ingredients list
-    #ingredients = serializers.PrimaryKeyRelatedField(queryset=Ingredient.objects.all(), source="ingredients")
+    # Nest the serializer to represent a nested relationship.
+    ingredients = IngredientSerializer(many=True)
 
     class Meta:
         model = Recipe
