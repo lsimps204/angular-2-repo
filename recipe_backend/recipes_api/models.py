@@ -10,7 +10,7 @@ class Ingredient(models.Model):
 class Recipe(models.Model):
     name = models.CharField(max_length=64)
     description = models.CharField(max_length=128)
-    imagePath = models.CharField(max_length=256)
+    imagePath = models.CharField(max_length=1024, blank='')
     ingredients = models.ManyToManyField(Ingredient, through="RecipeIngredient")
 
     def __str__(self):
