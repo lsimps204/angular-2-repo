@@ -16,12 +16,17 @@
         </ul>
 
         <!-- Right hand side -->
-        <ul class="navbar-nav ml-auto mr-4">
+        <ul class="navbar-nav ml-auto mr-4"  *ngIf="!loggedIn()">
             <li class="mr-2">
                 <a routerLink="/signin">Login</a>
             </li>
             <li>
                 <a routerLink="/signup">Register</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto mr-4" *ngIf="loggedIn()">
+            <li>
+                <a class="nav-link" (click)="onLogout()">Logout</a>
             </li>
         </ul>
         <div ngbDropdown>
