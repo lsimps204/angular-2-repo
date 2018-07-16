@@ -1,12 +1,16 @@
+from django.contrib.auth import get_user_model
+
 from rest_framework import generics, viewsets
+from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
 
 from .models import Recipe
-from .serializers import RecipeSerializer, RecipeCreateUpdateSerializer
+from .serializers import RecipeSerializer, RecipeCreateUpdateSerializer, UserSerializer
 
 # Lists all recipes
 class RecipeListAPIView(generics.ListAPIView):
     queryset = Recipe.objects.all()
     serializer_class = RecipeSerializer
+    #permission_classes = [IsAuthenticatedOrReadOnly]
 
 class RecipeCreateAPIView(generics.CreateAPIView):
     queryset = Recipe.objects.all()
@@ -28,6 +32,7 @@ class RecipeDetailAPIView(generics.RetrieveAPIView):
     queryset = Recipe.objects.all()
     serializer_class = RecipeSerializer
     lookup_field = 'pk'
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
 # Updates an existing Recipe, based on the pk in the URL.
 # "RetrieveUpdate" - pre-fills the update form w/ existing data
@@ -42,5 +47,8 @@ class RecipeDeleteAPIView(generics.DestroyAPIView):
     serializer_class = RecipeSerializer
     lookup_field = 'pk'
 
- 
-##### INGREDIENT API ####
+# Registration
+class RegisterAPIView(generics.CreateAPIView):
+    queryset = get_user_model().objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [AllowAny] # Override the IsAuthenticated default in settings.py to allow registration

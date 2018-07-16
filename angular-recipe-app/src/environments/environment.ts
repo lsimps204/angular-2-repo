@@ -3,10 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
-  firebase: {
-    databaseURL: "https://ng-recipe-book-48c1b.firebaseio.com",
-  }
+  production: false
 };
 
 /*

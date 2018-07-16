@@ -21,7 +21,11 @@ export class RecipeDetailComponent implements OnInit {
     this.route.paramMap.subscribe(
       (params: ParamMap) => {
         this.id = +params.get('id')
-        this.recipe = this.recipeService.getRecipe(this.id)
+        if (this.recipeService.recipeExists(this.id)) {
+          this.recipe = this.recipeService.getRecipe(this.id)
+        } else {
+          this.router.navigate(["/recipes"])
+        }   
       }
     )
   }

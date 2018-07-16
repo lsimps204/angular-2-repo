@@ -15,10 +15,19 @@
             </li>
         </ul>
 
+        <!-- Right hand side -->
+        <ul class="navbar-nav ml-auto mr-4">
+            <li class="mr-2">
+                <a routerLink="/signin">Login</a>
+            </li>
+            <li>
+                <a routerLink="/signup">Register</a>
+            </li>
+        </ul>
         <div ngbDropdown>
             <button class="btn btn-secondary dropdown-toggle" ngbDropdownToggle>Manage</button>
             <div ngbDropdownMenu>
-                <a class="dropdown-item">Save Data</a>
+                <a class="dropdown-item" (click)="onSaveData()">Save Data</a>
                 <a class="dropdown-item" (click)="onGetData()">Fetch Data</a>
             </div>
         </div>

@@ -3,27 +3,25 @@ import { Recipe } from './recipe.model'
 import { Ingredient } from '../shared/ingredient.model';
 import { ShoppingListService } from '../shopping-list/shopping-list.service';
 import { Subject } from 'rxjs';
+import { DataStorageService } from '../shared/data-storage.service';
 
 @Injectable()
 export class RecipeService {
     recipesChanged = new Subject<Recipe[]>()
 
-    private recipes: Recipe[] = [
-        new Recipe(
-            "Rigatoni Con Pollo e Zucchine", 
-            "Pasta and chicken", 
-            "https://media-cdn.tripadvisor.com/media/photo-s/09/f4/15/54/rigatoni-con-pollo.jpg",
-            [new Ingredient('Chicken', 1), new Ingredient('Pasta', 40)]
-        ),
-        new Recipe(
-            "Salad", 
-            "Healthy salad", 
-            "http://images.media-allrecipes.com/userphotos/960x960/4552561.jpg",
-            [new Ingredient("Tomato", 6), new Ingredient("Peppers", 1), new Ingredient("Red Onion", 1)]
-        )
-    ]
+    private recipes: Recipe[] = []
 
-    constructor(private slService: ShoppingListService ) {}
+    constructor(private slService: ShoppingListService) {}
+
+    setRecipes(recipes: Recipe[]) {
+        this.recipes = recipes
+        this.recipesChanged.next(this.recipes.slice())
+    }
+
+    /* Naive existence check: simply determines if the number passed in is a valid index to this.recipes */
+    recipeExists(index: number): boolean {
+        return (this.recipes.length - 1) >= index
+    }
 
     getRecipe(index: number): Recipe {
         return this.recipes[index]
@@ -34,7 +32,6 @@ export class RecipeService {
     }
 
     addIngredientsToShoppingList(ingredients: Ingredient[]) {
-        console.log("in service")
         this.slService.addIngredients(ingredients)
     }
 

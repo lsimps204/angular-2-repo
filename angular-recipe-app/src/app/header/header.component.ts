@@ -9,10 +9,15 @@ export class HeaderComponent {
 
     constructor(private dsService: DataStorageService) {}
 
+    /* Trigger the GET request to get all recipes */
     onGetData() {
-        this.dsService.getRecipes().subscribe(
-            (response: Response) => console.log(response)
-        )
+        this.dsService.getRecipes()
     }
     
+    /* Trigger the POST request to save all recipes */
+    onSaveData() {
+        this.dsService.storeRecipes().subscribe(
+            data => console.log(data)
+        )
+    }
 }

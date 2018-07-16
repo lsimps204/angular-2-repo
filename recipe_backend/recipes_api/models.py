@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 
 class Ingredient(models.Model):
@@ -15,6 +16,10 @@ class Recipe(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        from django.urls import reverse
+        return reverse('recipe_detail', args=[str(self.pk)])
 
 class RecipeIngredient(models.Model):
     ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
