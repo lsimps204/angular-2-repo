@@ -52,3 +52,8 @@ class RegisterAPIView(generics.CreateAPIView):
     queryset = get_user_model().objects.all()
     serializer_class = UserSerializer
     permission_classes = [AllowAny] # Override the IsAuthenticated default in settings.py to allow registration
+
+    def perform_create(self, serializer):
+        instance = serializer.save()
+        instance.set_password(instance.password)
+        instance.save()
