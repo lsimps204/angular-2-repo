@@ -50,6 +50,8 @@ export class AuthService {
         return localStorage.getItem(TOKEN_NAME) !== null
     }
 
+    isAuthenticated() { return this.hasToken() }
+
     /* Adds the HTTP Authorization header with the JWT */
     createJwtHeaders() {
         return new HttpHeaders({

@@ -23,7 +23,7 @@ export class HeaderComponent {
     }
 
     loggedIn() {
-        return this.authService.hasToken()
+        return this.authService.isAuthenticated()
     }
 
     onLogout() {
