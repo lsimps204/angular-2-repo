@@ -1,4 +1,4 @@
-from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
 
 from rest_framework import serializers
 
@@ -22,8 +22,6 @@ class IngredientSerializer(serializers.ModelSerializer):
     # TO-DO - find a way to pass the parent recipe here, to filter the return call correctly.
     # Currently throwing a MultipleObjectsFound error.
     def get_amount_field(self, obj):
-        #[print(i.ingredient,obj.pk) for i in obj.recipeingredient_set.all()]
-        #print("pk: {}\n{}\n\n".format(obj.pk, obj.recipeingredient_set.all()))
         return obj.recipeingredient_set.get(ingredient=obj.pk).amount
 
 class RecipeSerializer(serializers.ModelSerializer):
@@ -77,5 +75,12 @@ class RecipeCreateUpdateSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = get_user_model()
+        model = User
         fields = ['username', 'password']
+
+    # Override create to hash the new user's password
+    def create(self, validated_data):
+        user = User(username=validated_data['username'])
+        user.set_password(validated_data['password'])
+        user.save()
+        return user

@@ -54,8 +54,8 @@ class RegisterAPIView(generics.CreateAPIView):
     permission_classes = [AllowAny] # Override the IsAuthenticated default in settings.py to allow registration
 
     # perform_create = a hook provided by CreateAPIView, allowing actions to be performed when the object's created.
-    # Here, it's used to hash the user's pw
-    def perform_create(self, serializer):
-        instance = serializer.save()
-        instance.set_password(instance.password)
-        instance.save()
+    # Here, it was used to hash the user's pw. Now moved into the serializer's 'create' method
+    # def perform_create(self, serializer):
+    #     instance = serializer.save()
+    #     instance.set_password(instance.password)
+    #     instance.save()
