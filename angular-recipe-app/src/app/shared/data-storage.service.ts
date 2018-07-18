@@ -16,10 +16,8 @@ export class DataStorageService {
     /* Gets all the recipes from the backend */
     getRecipes() {
         if (this.authService.hasToken()) {
-            const headers = this.authService.createJwtHeaders()
-
             const url = `${this.baseBackendUrl}/recipes/`
-            return this.http.get<Recipe[]>(url, {'headers': headers})
+            return this.http.get<Recipe[]>(url)
             .pipe(
                 /* If a given recipe has no ingredients, init an empty array */
                 map(recipes => {
