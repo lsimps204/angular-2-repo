@@ -13,7 +13,7 @@ export class AuthService {
 
     constructor(private http: HttpClient, private router: Router) {}
 
-    /* For registration */
+    /* For registration. */
     signupUser(username: string, password: string) {
         const url = `${this.authBase}/register`
         this.http.post(url, {'username': username, 'password': password})
