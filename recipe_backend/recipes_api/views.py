@@ -2,10 +2,16 @@ from django.contrib.auth import get_user_model
 
 from rest_framework import generics, viewsets
 from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
-from rest_framework.filters import OrderingFilter
+from rest_framework.filters import OrderingFilter, SearchFilter
+from django_filters.rest_framework import DjangoFilterBackend
 
 from .models import Recipe
-from .serializers import RecipeSerializer, RecipeCreateUpdateSerializer, UserSerializer
+from .serializers import (
+    RecipeSerializer, 
+    RecipeCreateUpdateSerializer, 
+    UserSerializer, 
+    UserReadSerializer
+)
 
 # Lists all recipes
 class RecipeListAPIView(generics.ListAPIView):
@@ -71,3 +77,12 @@ class RegisterAPIView(generics.CreateAPIView):
     #     instance = serializer.save()
     #     instance.set_password(instance.password)
     #     instance.save()
+
+class UserListAPIView(generics.ListAPIView):
+    serializer_class = UserReadSerializer
+    queryset = get_user_model().objects.all()
+    permission_classes = [AllowAny]
+    filter_backends = [DjangoFilterBackend, SearchFilter]
+    filter_fields = ['username', 'email'] # Defines simple equality-based filtering, ex: xyz?username=lsimps204&email=abc
+    search_fields = ['username', 'email'] # Allows simple searching using the 'search' query_param
+    

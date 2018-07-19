@@ -11,6 +11,7 @@ urlpatterns = [
     path('<int:pk>', views.RecipeDetailAPIView.as_view(), name='recipe_detail'),
     path('<int:pk>/edit', views.RecipeUpdateAPIView.as_view(), name='recipe_update'),
     path('<int:pk>/delete', views.RecipeDeleteAPIView.as_view(), name='recipe_delete'),
+    path('users', views.UserListAPIView.as_view(), name="users")
 ]
 
 # JWT/Auth routes

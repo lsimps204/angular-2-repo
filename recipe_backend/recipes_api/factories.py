@@ -1,11 +1,11 @@
 import factory, random
-
+from django.contrib.auth.models import User
 from .models import *
 
 class RecipeFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Recipe
-        django_get_or_create = ("name",) # Don't duplicate this
+        django_get_or_create = ("name",)
     
     name = factory.Faker('name')
     description = factory.Faker('sentence')
@@ -13,7 +13,7 @@ class RecipeFactory(factory.django.DjangoModelFactory):
 class IngredientFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Ingredient
-        django_get_or_create = ('name',) # Don't duplicate this
+        django_get_or_create = ('name',)
     
     name = factory.Faker('name')
 
@@ -30,8 +30,20 @@ class RecipeWithIngredientFactory(RecipeFactory):
     membership = factory.RelatedFactory(RecipeIngredientFactory, 'recipe')
     membership2 = factory.RelatedFactory(RecipeIngredientFactory, 'recipe')
 
+class UserFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = User
+        django_get_or_create = ('username', )
 
-# Create random data:
+    username = factory.Faker('name')
+    email = factory.Faker('ascii_safe_email')
+    first_name = factory.Faker('first_name')
+    last_name = factory.Faker('last_name')
+
+# Run this method to create fake data
 def create_fake_data():
-    for i in range(10):
-        RecipeWithIngredientFactory.create()
+    if Ingredient.objects.count() < 50:
+        [RecipeWithIngredientFactory.create() for _ in range(10)]
+    
+    if User.objects.count() < 50:
+        [UserFactory.create() for _ in range(10)]
