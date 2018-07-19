@@ -2,15 +2,27 @@ from django.contrib.auth import get_user_model
 
 from rest_framework import generics, viewsets
 from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
+from rest_framework.filters import OrderingFilter
 
 from .models import Recipe
 from .serializers import RecipeSerializer, RecipeCreateUpdateSerializer, UserSerializer
 
 # Lists all recipes
 class RecipeListAPIView(generics.ListAPIView):
-    queryset = Recipe.objects.all()
     serializer_class = RecipeSerializer
-    #permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [AllowAny]
+    filter_backends = [OrderingFilter]
+    ordering_fields = ["name", "description"] # Ordering fields: specified via a query_param
+    ordering = ["name"] # Default ordering (no query_param required)
+    
+    # Return all recipes, or filter by the query parameter
+    def get_queryset(self):
+        queryset = Recipe.objects.all()
+        recipe_name = self.request.query_params.get('name', None)
+        if recipe_name is not None:
+            queryset = queryset.filter(name__icontains=recipe_name)
+        return queryset
+
 
 class RecipeCreateAPIView(generics.CreateAPIView):
     queryset = Recipe.objects.all()

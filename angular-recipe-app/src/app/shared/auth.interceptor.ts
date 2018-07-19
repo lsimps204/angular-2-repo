@@ -11,7 +11,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
     /* Sets the JWT for each request to the backend */
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        const headers = this.authService.createJwtHeaders()
+        //const headers = this.authService.createJwtHeaders()
 
         const authRequest = request.clone({
             headers: request.headers.set("Authorization", `JWT ${this.authService.getToken()}`)
