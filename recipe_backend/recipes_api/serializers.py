@@ -86,6 +86,15 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
 class UserReadSerializer(serializers.ModelSerializer):
+    # Preferable alternative to overriding to_representation to change datetime format
+    date_joined = serializers.DateTimeField(format="%d-%m-%Y %H:%M")
+
     class Meta:
         model = User
-        fields = ['username', 'email', 'first_name', 'last_name']
+        fields = ['username', 'email', 'first_name', 'last_name', 'date_joined']
+
+    # Override to convert date_joined field to more readable output
+    # def to_representation(self, instance):
+    #     representation = super().to_representation(instance)
+    #     representation['date_joined'] = instance.date_joined.strftime("%d-%m-%Y %H:%M")
+    #     return representation

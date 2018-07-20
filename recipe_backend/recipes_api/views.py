@@ -6,6 +6,7 @@ from rest_framework.filters import OrderingFilter, SearchFilter
 from django_filters.rest_framework import DjangoFilterBackend
 
 from .models import Recipe
+from .filters import UserFilter
 from .serializers import (
     RecipeSerializer, 
     RecipeCreateUpdateSerializer, 
@@ -83,6 +84,7 @@ class UserListAPIView(generics.ListAPIView):
     queryset = get_user_model().objects.all()
     permission_classes = [AllowAny]
     filter_backends = [DjangoFilterBackend, SearchFilter]
-    filter_fields = ['username', 'email'] # Defines simple equality-based filtering, ex: xyz?username=lsimps204&email=abc
+    #filter_fields = ['username', 'email'] # Defines simple equality-based filtering, ex: xyz?username=lsimps204&email=abc
+    filterset_class = UserFilter # Use custom filter, defined in filters.py
     search_fields = ['username', 'email'] # Allows simple searching using the 'search' query_param
     
