@@ -42,8 +42,13 @@ class UserFactory(factory.django.DjangoModelFactory):
 
 # Run this method to create fake data
 def create_fake_data():
+    changes_made = False
     if Ingredient.objects.count() < 50:
         [RecipeWithIngredientFactory.create() for _ in range(10)]
-    
+        changes_made = True
+
     if User.objects.count() < 50:
         [UserFactory.create() for _ in range(10)]
+        changes_made = True
+
+    return changes_made
