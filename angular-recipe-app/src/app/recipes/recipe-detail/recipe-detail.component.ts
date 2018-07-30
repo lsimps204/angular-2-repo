@@ -17,6 +17,7 @@ export class RecipeDetailComponent implements OnInit {
     private recipeService: RecipeService, private route: ActivatedRoute, private router: Router
   ) { }
 
+  /* Subscribe to any changes in the route parameters for this component, and update the recipe accordingly. */
   ngOnInit() {
     this.route.paramMap.subscribe(
       (params: ParamMap) => {

@@ -9,9 +9,14 @@ import { AuthService } from '../auth.service';
 })
 export class SigninComponent implements OnInit {
 
+  hasError = false
+
   constructor(private authService: AuthService) { }
 
   ngOnInit() {
+    this.authService.error.subscribe(err => {
+      this.hasError = true
+    })
   }
 
   onSignIn(form: NgForm) {

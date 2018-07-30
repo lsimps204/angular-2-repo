@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
+import { Subject } from "rxjs";
 
 export const TOKEN_NAME = "jwt_token"
 
@@ -8,7 +9,7 @@ export const TOKEN_NAME = "jwt_token"
 export class AuthService {
 
     private authBase = "http://localhost:8000/api/recipes"
-
+    public error = new Subject<string>()
     private user = {}
 
     constructor(private http: HttpClient, private router: Router) {}
@@ -24,11 +25,14 @@ export class AuthService {
     loginUser(username: string, password: string) {
         const url = `${this.authBase}/api-token-auth`
         this.http.post(url, {'username': username, 'password': password})
-            .subscribe(data => {
-                this.setToken(data['token'])
-                this.user = {'username': username }
-                this.router.navigate(["/"])
-            })
+            .subscribe(
+                data => {
+                    this.setToken(data['token'])
+                    this.user = {'username': username }
+                    this.router.navigate(["/"])
+                },
+                error => this.error.next(error)
+            )
     }
 
     logout() {
