@@ -155,3 +155,7 @@ JWT_AUTH = {
     'JWT_ALLOW_REFRESH': True,
     'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=36000)
 }
+
+# Celery settings
+CELERY_BROKER_URL = 'amqp://admin:password@rabbit:5672/'
+CELERY_RESULT_BACKEND = 'rpc://'

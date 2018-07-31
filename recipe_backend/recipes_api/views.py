@@ -87,4 +87,3 @@ class UserListAPIView(generics.ListAPIView):
     #filter_fields = ['username', 'email'] # Defines simple equality-based filtering, ex: xyz?username=lsimps204&email=abc
     filterset_class = UserFilter # Use custom filter, defined in filters.py
     search_fields = ['username', 'email'] # Allows simple searching using the 'search' query_param
-    

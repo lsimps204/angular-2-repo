@@ -1,16 +1,25 @@
 version: '3'
 
 services:
+  rabbit:
+    hostname: rabbit
+    image: rabbitmq:latest
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=password
+    ports:
+      - "5672:5672"
+  worker:
+    build: .
+    command: celery -A recipe_backend worker -l info
+    depends_on:
+      - rabbit
+    volumes:
+      - .:/code
   db:
     image: postgres:latest
     ports:
       - "5432:5432"
-    healthcheck:
-      test: ["CMD", "pg_isready -U postgres"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    restart: on-failure
   web:
     build: .
     command: bash -c "/code/wait-for-postgres.sh db
@@ -26,3 +35,4 @@ services:
     restart: on-failure
     depends_on:
       - db
+      - rabbit
