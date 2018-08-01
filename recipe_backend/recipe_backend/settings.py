@@ -87,13 +87,15 @@ if os.environ.get('DOCKER_CONTAINER', None) is None:
         }
     }
 else:
+    # DB container's name/user/password environment variables are set in the Docker-Compose.yaml file.
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'postgres',
-            'USER': 'postgres',
-            'HOST': 'db', # set in docker-compose.yml
-            'PORT': 5432 # default postgres port
+            'NAME': 'test_database',
+            'USER': 'lyle',
+            'PASSWORD': 'secret',
+            'HOST': 'db',
+            'PORT': 5432 # default Postgres port
         }
     }
 

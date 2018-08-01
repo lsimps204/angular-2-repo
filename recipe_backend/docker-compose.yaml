@@ -22,6 +22,13 @@ services:
     image: postgres:latest
     ports:
       - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data   # Default Postgres data directory on Linux
+    environment:
+      - POSTGRES_USER=lyle
+      - POSTGRES_PASSWORD=secret
+      - POSTGRES_DB=test_database
+    restart: always
   web:
     build: .
     command: bash -c "/code/wait-for-postgres.sh db
@@ -38,3 +45,5 @@ services:
     depends_on: # The web service should be launched after the Postgres and RabbitMQ containers are up and running
       - db
       - rabbit
+volumes:
+  pgdata:
