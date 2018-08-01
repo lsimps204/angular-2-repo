@@ -11,6 +11,8 @@ urlpatterns = [
     path('<int:pk>', views.RecipeDetailAPIView.as_view(), name='recipe_detail'),
     path('<int:pk>/edit', views.RecipeUpdateAPIView.as_view(), name='recipe_update'),
     path('<int:pk>/delete', views.RecipeDeleteAPIView.as_view(), name='recipe_delete'),
+    path('delete', views.RecipeDeleteAllView.as_view(), name='recipe_delete_all'),
+    path('generate', views.RecipeGenerateView.as_view(), name='recipe_generate'),
     path('users', views.UserListAPIView.as_view(), name="users")
 ]
 

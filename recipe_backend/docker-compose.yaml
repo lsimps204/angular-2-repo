@@ -1,5 +1,7 @@
 version: '3'
 
+# This setup uses: a PostgreSQL database, a Django/REST Framework web application, a Celery worker, and a RabbitMQ message broker.
+
 services:
   rabbit:
     hostname: rabbit
@@ -11,7 +13,7 @@ services:
       - "5672:5672"
   worker:
     build: .
-    command: celery -A recipe_backend worker -l info
+    command: celery -A recipe_backend worker -l info # Runs the Celery worker in the container, with log-level set to INFO
     depends_on:
       - rabbit
     volumes:
@@ -33,6 +35,6 @@ services:
     ports:
       - "8000:8000"
     restart: on-failure
-    depends_on:
+    depends_on: # The web service should be launched after the Postgres and RabbitMQ containers are up and running
       - db
       - rabbit

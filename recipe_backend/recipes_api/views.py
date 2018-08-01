@@ -1,10 +1,16 @@
 from django.contrib.auth import get_user_model
+from django.views.generic.list import MultipleObjectMixin
 
+from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework import generics, viewsets
 from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
 from rest_framework.filters import OrderingFilter, SearchFilter
 from django_filters.rest_framework import DjangoFilterBackend
 
+import os
+
+from .tasks import *
 from .models import Recipe
 from .filters import UserFilter
 from .serializers import (
@@ -87,3 +93,24 @@ class UserListAPIView(generics.ListAPIView):
     #filter_fields = ['username', 'email'] # Defines simple equality-based filtering, ex: xyz?username=lsimps204&email=abc
     filterset_class = UserFilter # Use custom filter, defined in filters.py
     search_fields = ['username', 'email'] # Allows simple searching using the 'search' query_param
+
+class RecipeDeleteAllView(APIView):
+    # If in the container, use Celery task. Otherwise, RabbitMQ is not installed locally, thus default to synchronous ORM.
+    def get(self, request):
+        if os.environ.get('DOCKER_CONTAINER', None) is None:
+            Recipe.objects.all().delete()
+            return Response()
+        else:
+            delete_all_recipes.delay()
+            return Response()
+
+# Generates new recipes
+class RecipeGenerateView(APIView):
+    def get(self, request):
+        if os.environ.get('DOCKER_CONTAINER', None) is None:
+            from .factories import create_fake_data
+            create_fake_data()
+            return Response()
+        else:
+            populate_database.delay()
+            return Response()

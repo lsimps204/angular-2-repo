@@ -22,6 +22,14 @@ export class HeaderComponent {
         )
     }
 
+    onDeleteData() {
+        this.dsService.deleteAllRecipes()
+    }
+
+    onGenerateData() {
+        this.dsService.generateRecipes()
+    }
+
     loggedIn() {
         return this.authService.isAuthenticated()
     }

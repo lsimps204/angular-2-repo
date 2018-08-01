@@ -43,12 +43,22 @@ class UserFactory(factory.django.DjangoModelFactory):
 # Run this method to create fake data
 def create_fake_data():
     changes_made = False
-    if Ingredient.objects.count() < 50:
+    if Ingredient.objects.count() < 50 or Recipe.objects.count() < 25:
         [RecipeWithIngredientFactory.create() for _ in range(10)]
         changes_made = True
 
     if User.objects.count() < 50:
+        user, created = User.objects.get_or_create(username="testing")
+        if created:
+            user.set_password("pw")
+            user.save()
         [UserFactory.create() for _ in range(10)]
         changes_made = True
 
+    # Delete all ingredients that do not belong to a recipe
+    if Ingredient.objects.count() > 75:
+        Ingredient.objects.filter(recipe__isnull=True).delete()
+        changes_made = True
+
     return changes_made
+

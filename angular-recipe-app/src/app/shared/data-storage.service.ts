@@ -43,4 +43,25 @@ export class DataStorageService {
         const recipes = this.recipeService.getRecipes()
         return this.http.post<Recipe[]>(url, recipes)
     }
+
+
+    deleteAllRecipes() {
+        if (this.authService.hasToken()) {
+            const url = `${this.baseBackendUrl}/recipes/delete`
+            this.http.get(url).subscribe(
+                res => this.recipeService.setRecipes([]) // Reset the recipes to none
+            )
+        } else {
+            this.router.navigate(["/signin"])
+        }
+    }
+
+    generateRecipes() {
+        if (this.authService.hasToken()) {
+            const url = `${this.baseBackendUrl}/recipes/generate`
+            this.http.get(url).subscribe()
+        } else {
+            this.router.navigate(["/signin"])
+        }
+    }
 }

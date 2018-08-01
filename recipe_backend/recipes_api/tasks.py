@@ -3,7 +3,7 @@
 from __future__ import absolute_import, unicode_literals
 from celery import shared_task
 from celery.utils.log import get_task_logger
-from recipes_api import factories
+from recipes_api import factories, models
 
 logger = get_task_logger(__name__)
 
@@ -12,3 +12,7 @@ def populate_database():
     logger.info('Populating...')
     changes = factories.create_fake_data()
     logger.info("CEL: Database changes entered") if changes else logger.info("CEL: No changes made. Consider clearing the database")
+
+@shared_task
+def delete_all_recipes():
+    models.Recipe.objects.all().delete()
