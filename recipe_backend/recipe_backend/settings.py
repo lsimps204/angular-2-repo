@@ -161,3 +161,4 @@ JWT_AUTH = {
 # Celery settings
 CELERY_BROKER_URL = 'amqp://admin:password@rabbit:5672/'
 CELERY_RESULT_BACKEND = 'rpc://'
+CELERY_TIMEZONE = 'UTC'

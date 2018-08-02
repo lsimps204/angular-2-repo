@@ -12,8 +12,17 @@ services:
     ports:
       - "5672:5672"
   worker:
-    build: .
+    build: 
+      context: .
     command: celery -A recipe_backend worker -l info # Runs the Celery worker in the container, with log-level set to INFO
+    depends_on:
+      - rabbit
+    volumes:
+      - .:/code
+  celerybeat:
+    build:
+      context: .
+    command: celery -A recipe_backend beat -l info
     depends_on:
       - rabbit
     volumes:
@@ -30,7 +39,8 @@ services:
       - POSTGRES_DB=test_database
     restart: always
   web:
-    build: .
+    build:
+      context: .
     command: bash -c "/code/wait-for-postgres.sh db
              && python /code/manage.py makemigrations && python /code/manage.py migrate
              && python /code/manage.py loaddata ingredients.json recipes.json recipe_ingredient.json
