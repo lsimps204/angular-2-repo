@@ -11,11 +11,11 @@ from django_filters.rest_framework import DjangoFilterBackend
 import os
 
 from .tasks import *
+from .permissions import AllowIfNotInDockerContainer
 from .models import Recipe
 from .filters import UserFilter
 from .serializers import (
     RecipeSerializer, 
-    RecipeCreateUpdateSerializer, 
     UserSerializer, 
     UserReadSerializer
 )
@@ -39,7 +39,8 @@ class RecipeListAPIView(generics.ListAPIView):
 
 class RecipeCreateAPIView(generics.CreateAPIView):
     queryset = Recipe.objects.all()
-    serializer_class = RecipeCreateUpdateSerializer
+    serializer_class = RecipeSerializer
+    permission_classes = [AllowIfNotInDockerContainer]
 
     # Override get_serializer to set the serializer's 'many' flag to True if the received data is a list.
     def get_serializer(self, *args, **kwargs):
@@ -63,7 +64,7 @@ class RecipeDetailAPIView(generics.RetrieveAPIView):
 # "RetrieveUpdate" - pre-fills the update form w/ existing data
 class RecipeUpdateAPIView(generics.RetrieveUpdateAPIView):
     queryset = Recipe.objects.all()
-    serializer_class = RecipeCreateUpdateSerializer
+    serializer_class = RecipeSerializer
     lookup_field = 'pk'
 
 # Deletes an existing Recipe, based on the pk in the URL.
@@ -104,8 +105,9 @@ class RecipeDeleteAllView(APIView):
             delete_all_recipes.delay()
             return Response()
 
-# Generates new recipes
+# Generates new recipes on a GET
 class RecipeGenerateView(APIView):
+    permission_classes = [AllowIfNotInDockerContainer] # Custom permission
     def get(self, request):
         if os.environ.get('DOCKER_CONTAINER', None) is None:
             from .factories import create_fake_data
