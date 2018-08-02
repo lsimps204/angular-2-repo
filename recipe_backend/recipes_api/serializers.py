@@ -25,8 +25,8 @@ class IngredientSerializer(serializers.ModelSerializer):
         return obj.recipeingredient_set.get(ingredient=obj.pk).amount
 
 class RecipeSerializer(serializers.ModelSerializer):
-    # Nest the serializer to represent a nested relationship.
     id = serializers.IntegerField(read_only=True)
+    # Nest the serializer to represent a nested relationship.
     ingredients = IngredientSerializer(many=True, style={'base_template': 'select_multiple.html'})
 
     class Meta:
