@@ -10,7 +10,8 @@ The purpose of this repo was initially to work with the Angular course and learn
 
 Features:
 
-- Dockerized environment, with docker-compose used to coordinate 5 different containers
+- Dockerized environment, with docker-compose used to coordinate 6 different containers
+- An Angular front-end application, served from an Nginx container.
 - An API written using Django REST Framework, which is queried by the Angular front-end using the HttpClient
 - JWT authentication using the rest-framework-jwt library
 - PostgreSQL database within the Docker environment

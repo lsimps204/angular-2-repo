@@ -56,7 +56,7 @@ export class RecipeEditComponent implements OnInit {
   }
 
   /* Navigates back to the parent page */
-  private goBack() {
+  public goBack() {
     this.router.navigate(["../"], { relativeTo: this.route })
   }
 
