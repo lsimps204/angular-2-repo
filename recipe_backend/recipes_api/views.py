@@ -4,7 +4,7 @@ from django.views.generic.list import MultipleObjectMixin
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import generics, viewsets
-from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
+from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly, IsAuthenticated
 from rest_framework.filters import OrderingFilter, SearchFilter
 from django_filters.rest_framework import DjangoFilterBackend
 
@@ -58,7 +58,7 @@ class RecipeDetailAPIView(generics.RetrieveAPIView):
     queryset = Recipe.objects.all()
     serializer_class = RecipeSerializer
     lookup_field = 'pk'
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [AllowAny]
 
 # Updates an existing Recipe, based on the pk in the URL.
 # "RetrieveUpdate" - pre-fills the update form w/ existing data
@@ -66,12 +66,14 @@ class RecipeUpdateAPIView(generics.RetrieveUpdateAPIView):
     queryset = Recipe.objects.all()
     serializer_class = RecipeSerializer
     lookup_field = 'pk'
+    permission_classes = [IsAuthenticated]
 
 # Deletes an existing Recipe, based on the pk in the URL.
 class RecipeDeleteAPIView(generics.DestroyAPIView):
     queryset = Recipe.objects.all()
     serializer_class = RecipeSerializer
     lookup_field = 'pk'
+    permission_classes = [IsAuthenticated]
 
 # Registration
 class RegisterAPIView(generics.CreateAPIView):

@@ -7,7 +7,6 @@ class Ingredient(models.Model):
     def __str__(self):
         return self.name
 
-# Create your models here.
 class Recipe(models.Model):
     name = models.CharField(max_length=64)
     description = models.CharField(max_length=128)
@@ -21,6 +20,7 @@ class Recipe(models.Model):
         from django.urls import reverse
         return reverse('recipe_detail', args=[str(self.pk)])
 
+# Many-to-Many through model.
 class RecipeIngredient(models.Model):
     ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
