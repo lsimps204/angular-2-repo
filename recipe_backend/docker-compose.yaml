@@ -3,6 +3,13 @@ version: '3'
 # This setup uses: a PostgreSQL database, a Django/REST Framework web application, a Celery worker, and a RabbitMQ message broker.
 
 services:
+  
+  # Builds the angular app and serves using nginx.
+  angular:
+    build: ../angular-recipe-app
+    ports:
+      - "4200:80"
+
   rabbit:
     hostname: rabbit
     image: rabbitmq:latest
@@ -59,6 +66,14 @@ services:
     depends_on: # The web service should be launched after the Postgres and RabbitMQ containers are up and running
       - db
       - rabbit
+
+  # jenkins:
+  #   image: jenkins/jenkins
+  #   ports:
+  #     - "8080:8080"
+  #     - "5000:5000"
+  #   volumes:
+  #     - ./jenkins_home:/var/jenkins_home
       
 volumes:
   pgdata:
