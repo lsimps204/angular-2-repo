@@ -48,13 +48,8 @@ def task_backup_sqlite_database():
     elif len(existing_files) == 1:
         backup_helper.make_backup()
 
-    # If two, then backup and remove oldest
-    elif len(existing_files) == 2:
-        backup_helper.make_backup()
-        backup_helper.remove_older_backups()
-
-    # If (for some reason) there's more than two, remove the older backups until only two exist
-    elif len(existing_files) > 2:
+    # If two (or more, for whatever reason), then backup and remove oldest
+    elif len(existing_files) >= 2:
         backup_helper.make_backup()
         backup_helper.remove_older_backups()
 
