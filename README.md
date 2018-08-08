@@ -4,7 +4,7 @@ Recipe application build as part of the following course: https://www.udemy.com/
 
 Comprised of two parts: a front-end web application, written in Angular 6, and a backend API written in Django. This deviates from the course, which used Firebase as its backend, mainly as a source for Angular HTTP requests via the HttpClient.
 
-The course has been extended to include the use of Django, Django REST framework, PostgreSQL/SQLite, Docker, Celery, and RabbitMQ. There's also a Jenkins container, which can be configured as required once all the containers are running.
+The course has been extended to include the use of Django, Django REST framework, PostgreSQL/SQLite, Docker, Celery, and RabbitMQ. There's also a Jenkins container, which can be configured as required once all the containers are running. I'm using it to set up a job which polls the GitHub repository for any changes, and triggers the Django test suite when new changes are detected.
 
 The purpose of this repo was initially to work with the Angular course and learn Angular, but has been extended to consolidate knowledge of Docker/containers, as well as DevOps practices. It also allowed for exploration of libraries that can work in concert with Django REST Framework, as well as investigate things such as periodic tasks in Celery.
 
