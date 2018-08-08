@@ -4,37 +4,30 @@ from rest_framework import serializers
 
 from .models import Recipe, Ingredient,RecipeIngredient
 
-class RecipeIngredientSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = RecipeIngredient
-        fields = ['amount']
 
 class IngredientSerializer(serializers.ModelSerializer):
     # See here for potential help:
     # https://github.com/encode/django-rest-framework/issues/5403
 
-    amount = serializers.SerializerMethodField('get_amount_field')
-
     class Meta:
         model = Ingredient
-        fields = ['id', 'name', 'amount']
+        fields = ['id', 'name']
 
-    # TO-DO - find a way to pass the parent recipe here, to filter the return call correctly.
-    # Currently throwing a MultipleObjectsFound error.
-    def get_amount_field(self, obj):
-        try:
-            return obj.recipeingredient_set.get(ingredient=obj.pk).amount
-        except:
-            return ""
+class RecipeIngredientSerializer(serializers.ModelSerializer):
+    ingredient = IngredientSerializer()
+
+    class Meta:
+        model = RecipeIngredient
+        fields = ['ingredient', 'amount']
 
 class RecipeSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
     # Nest the serializer to represent a nested relationship.
-    ingredients = IngredientSerializer(many=True, style={'base_template': 'select_multiple.html'})
+    ingredient = RecipeIngredientSerializer(many=True, style={'base_template': 'select_multiple.html'}, source='recipe_to_ingredient')
 
     class Meta:
         model = Recipe
-        fields = ['id', 'name', 'description', 'imagePath', 'ingredients']
+        fields = ['id', 'name', 'description', 'imagePath', 'ingredient']
 
     # Override the serializer's 'create' method to only create new recipes when no corresponding name and description exists in the database.
     # If they do exist, update instead.
@@ -73,7 +66,7 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ['username', 'password']
 
-    # Override create to hash the new user's password
+    # Override create to hash the new user's password.
     def create(self, validated_data):
         user = User(username=validated_data['username'])
         user.set_password(validated_data['password'])

@@ -22,6 +22,6 @@ class Recipe(models.Model):
 
 # Many-to-Many through model.
 class RecipeIngredient(models.Model):
-    ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
+    ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE, related_name='ingredient_to_recipe')
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name='recipe_to_ingredient')
     amount = models.CharField(max_length=128)
