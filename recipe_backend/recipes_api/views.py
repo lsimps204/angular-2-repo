@@ -27,6 +27,13 @@ class IngredientViewSet(viewsets.ModelViewSet):
     queryset = Ingredient.objects.all()
     permission_classes = [AllowAny]
 
+    def get_permissions(self):
+        if self.action in ['list', 'retrieve']:
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [IsAuthenticated]
+        return [permission() for permission in permission_classes]
+
 # Lists all recipes
 class RecipeListAPIView(generics.ListAPIView):
     serializer_class = RecipeSerializer
