@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Recipe } from './recipe.model'
-import { Ingredient } from '../shared/ingredient.model';
+import { Ingredient, RecipeIngredient } from '../shared/ingredient.model';
 import { ShoppingListService } from '../shopping-list/shopping-list.service';
 import { Subject } from 'rxjs';
 import { DataStorageService } from '../shared/data-storage.service';
@@ -31,7 +31,7 @@ export class RecipeService {
         return this.recipes.slice() // Returns a new array (a copy) of the local recipes array, NOT a reference.
     }
 
-    addIngredientsToShoppingList(ingredients: Ingredient[]) {
+    addIngredientsToShoppingList(ingredients: RecipeIngredient[]) {
         this.slService.addIngredients(ingredients)
     }
 

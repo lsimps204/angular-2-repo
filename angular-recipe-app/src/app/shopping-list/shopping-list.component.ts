@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Ingredient } from '../shared/ingredient.model'
+import { Ingredient, RecipeIngredient } from '../shared/ingredient.model'
 import { ShoppingListService } from './shopping-list.service';
 import { Subscription } from 'rxjs';
 
@@ -10,15 +10,15 @@ import { Subscription } from 'rxjs';
 })
 export class ShoppingListComponent implements OnInit, OnDestroy {
 
-  ingredients: Ingredient[]
+  recipe_ingredients: RecipeIngredient[]
   private subscription: Subscription
   
   constructor(private slService: ShoppingListService) { }
 
   ngOnInit() {
-    this.ingredients = this.slService.getIngredients();
+    this.recipe_ingredients = this.slService.getIngredients();
     this.subscription = this.slService.ingredientsChanged.subscribe( 
-      (ingredients:Ingredient[]) => this.ingredients = ingredients
+      (ingredients:RecipeIngredient[]) => this.recipe_ingredients = ingredients
     )
   }
 

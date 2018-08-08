@@ -8,6 +8,7 @@ from .models import Recipe, Ingredient,RecipeIngredient
 class IngredientSerializer(serializers.ModelSerializer):
     # See here for potential help:
     # https://github.com/encode/django-rest-framework/issues/5403
+    id = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = Ingredient
