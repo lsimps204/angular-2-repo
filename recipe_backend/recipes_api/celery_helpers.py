@@ -49,15 +49,18 @@ class BackupHelper:
                 return
                 
     # Adds current datetime to the standard SQLite3 filename
-    def generate_backup_name(self):
+    @staticmethod
+    def generate_backup_name():
         current_datetime = timezone.now().strftime("%Y-%m-%d %H-%M-%S")
         return "db.sqlite3_{}".format(current_datetime)
 
-    def extract_datepart(self, file_list):
+    @staticmethod
+    def extract_datepart(file_list):
         # Extract the dates from the backup names, and find oldest/newest depending on the flag passed in. 
         date_part = ["{}".format(file.split("_")[1]) for file in file_list if "_" in file]
         date_part = [datetime.strptime(file_date, "%Y-%m-%d %H-%M-%S") for file_date in date_part]
         return date_part
 
-    def db_files(self):
+    @staticmethod
+    def db_files():
         return glob.glob("*.sqlite3*")
