@@ -22,7 +22,10 @@ class IngredientSerializer(serializers.ModelSerializer):
     # TO-DO - find a way to pass the parent recipe here, to filter the return call correctly.
     # Currently throwing a MultipleObjectsFound error.
     def get_amount_field(self, obj):
-        return obj.recipeingredient_set.get(ingredient=obj.pk).amount
+        try:
+            return obj.recipeingredient_set.get(ingredient=obj.pk).amount
+        except:
+            return ""
 
 class RecipeSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)

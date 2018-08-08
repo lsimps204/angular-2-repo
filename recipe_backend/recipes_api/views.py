@@ -12,13 +12,20 @@ import os
 
 from .tasks import *
 from .permissions import AllowIfNotInDockerContainer
-from .models import Recipe
+from .models import Recipe, Ingredient
 from .filters import UserFilter
 from .serializers import (
     RecipeSerializer, 
     UserSerializer, 
-    UserReadSerializer
+    UserReadSerializer,
+    IngredientSerializer
 )
+
+### Ingredient views
+class IngredientViewSet(viewsets.ModelViewSet):
+    serializer_class = IngredientSerializer
+    queryset = Ingredient.objects.all()
+    permission_classes = [AllowAny]
 
 # Lists all recipes
 class RecipeListAPIView(generics.ListAPIView):
