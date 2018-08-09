@@ -21,10 +21,18 @@ export class RecipeEditComponent implements OnInit {
     this.route.paramMap.subscribe(
       (params: ParamMap) => {
         this.id = +params.get('id')
-        this.editMode = params.get('id') != null
-        this.initForm()
+        if (!this.validDetailRoute()) {
+          this.router.navigate(["/"])
+        } else {
+          this.editMode = params.get('id') != null
+          this.initForm()
+        }
       }
     )
+  }
+
+  validDetailRoute() {
+    return this.recipeService.recipeExists(this.id)
   }
 
   onSubmit() {
@@ -72,7 +80,7 @@ export class RecipeEditComponent implements OnInit {
       recipeImagePath = recipe.imagePath
       recipeDescription = recipe.description
 
-      if (recipe['ingredients']) {
+      if (recipe['recipe_ingredients']) {
         for (let ingredient of recipe.recipe_ingredients) {
           recipeIngredients.push(new FormGroup({
             'name': new FormControl(ingredient.ingredient.name, Validators.required),
