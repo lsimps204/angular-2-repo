@@ -18,9 +18,19 @@ class BackupHelper:
         if oldest and newest:
             logger.error("Either `oldest` or `newest` should be set, but not both")
             return None
-        # Check if the original database file exists, delete if so
-        if "db.sqlite3" in file_list and oldest:
-            return "db.sqlite3"
+        # Check if the original database file exists
+        if "db.sqlite3" in file_list:
+            if oldest:
+                return "db.sqlite3"
+            elif newest:
+                if len(file_list) == 1: 
+                    return "db.sqlite3"
+                else:
+                    date_part = self.extract_datepart(file_list)
+                    date_str = max(date_part).strftime("%Y-%m-%d %H-%M-%S")
+                    for f in file_list:
+                        if f.endswith(date_str):
+                            return f
         else:
             date_part = self.extract_datepart(file_list)
             if oldest:

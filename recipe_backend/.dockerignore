@@ -1,0 +1,7 @@
+migrations
+__pycache__
+db.sqlite3*
+*.pyc
+celerybeat-schedule
+celerybeat.pid
+jenkins_home

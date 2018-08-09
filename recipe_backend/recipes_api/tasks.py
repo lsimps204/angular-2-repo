@@ -54,3 +54,14 @@ def task_backup_sqlite_database():
         backup_helper.remove_older_backups()
 
     logger.info("Database backed up")
+
+# Not intuitive or useful in any way... just a test
+@periodic_task(
+    run_every=(crontab(minute='*/2')),
+    name="cron.test", # It's a good idea to namespace task names
+    ignore_result=True
+)
+def sum_of_ingredients(break_point=None):
+    from django.db.models import Sum
+    s = models.RecipeIngredient.objects.aggregate(amt=Sum('amount'))['amt']
+    logger.info("A total of: {} ingredients used in recipes... useless statistic!".format(s))
