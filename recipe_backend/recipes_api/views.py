@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.views.generic.list import MultipleObjectMixin
 
+from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import generics, viewsets
@@ -28,11 +29,30 @@ class IngredientViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
 
     def get_permissions(self):
-        if self.action in ['list', 'retrieve']:
+        if self.action in ['list', 'retrieve', 'list_ingredients_beginning_with_vowels', 'list_ingredients_beginning_with_consonants']:
             permission_classes = [AllowAny]
         else:
             permission_classes = [IsAuthenticated]
         return [permission() for permission in permission_classes]
+    
+    @action(methods=['GET'], detail=False)
+    def list_ingredients_beginning_with_vowels(self, request):
+        data = self.serialize_startswith(vowel=True)
+        return Response(data)
+
+    @action(methods=['GET'], detail=False)
+    def list_ingredients_beginning_with_consonants(self, request):
+        data =self.serialize_startswith(vowel=False)
+        return Response(data)
+
+    # Serializes the ingredients based on whether they begin with a vowel or consonant.
+    def serialize_startswith(self, vowel=True):
+        if vowel:
+            qs = Ingredient.objects.filter(name__iregex=r"^[aeiou]")
+        else:
+            qs = Ingredient.objects.exclude(name__iregex=r"^[aeiou]")
+        serializer = self.get_serializer(qs, many=True)
+        return serializer.data
 
 # Lists all recipes
 class RecipeListAPIView(generics.ListAPIView):
