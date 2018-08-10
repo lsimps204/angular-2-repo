@@ -5,6 +5,7 @@ import { Recipe } from "../recipes/recipe.model";
 import { map } from 'rxjs/operators';
 import { AuthService } from "../auth/auth.service";
 import { Router } from "@angular/router";
+import { Ingredient, RecipeIngredient } from "./ingredient.model";
 
 @Injectable()
 export class DataStorageService {
@@ -22,8 +23,8 @@ export class DataStorageService {
                 /* If a given recipe has no ingredients, init an empty array */
                 map(recipes => {
                     for (let recipe of recipes) {
-                        if (!recipe['ingredients']) {
-                            recipe['ingredients'] = []
+                        if (!recipe['recipe_ingredients']) {
+                            recipe['recipe_ingredients'] = []
                         }
                     }
                     return recipes

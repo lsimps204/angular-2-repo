@@ -24,11 +24,11 @@ class RecipeIngredientSerializer(serializers.ModelSerializer):
 class RecipeSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
     # Nest the serializer to represent a nested relationship.
-    ingredient = RecipeIngredientSerializer(many=True, style={'base_template': 'select_multiple.html'}, source='recipe_to_ingredient')
+    recipe_ingredients = RecipeIngredientSerializer(many=True, style={'base_template': 'select_multiple.html'}, source='recipe_to_ingredient')
 
     class Meta:
         model = Recipe
-        fields = ['id', 'name', 'description', 'imagePath', 'ingredient']
+        fields = ['id', 'name', 'description', 'imagePath', 'recipe_ingredients']
 
     # Override the serializer's 'create' method to only create new recipes when no corresponding name and description exists in the database.
     # If they do exist, update instead.
