@@ -41,3 +41,6 @@ def decode(*args, default=None):
         if search_term == field:
             return result
     return default
+
+def round(num, precision):
+    return float("{:0.{round_val}f}".format(num, round_val=precision))
