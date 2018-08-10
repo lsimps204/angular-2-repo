@@ -16,7 +16,7 @@ export class RecipeService {
     setRecipes(recipes: Recipe[]) {
         this.recipes = recipes
         this.recipesChanged.next(this.recipes.slice())
-        console.log(this.recipes)
+        //console.log(this.recipes)
     }
 
     /* Naive existence check: simply determines if the number passed in is a valid index to this.recipes */
